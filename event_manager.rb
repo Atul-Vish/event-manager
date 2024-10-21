@@ -1,5 +1,5 @@
 require 'csv'
-require 'pry-byebug'
+# require 'pry-byebug'
 puts 'EventManager initialized'
 
 contents = CSV.open(
@@ -11,9 +11,12 @@ contents = CSV.open(
 contents.each do |row|
   name = row[:first_name]
   zipcode = row[:zipcode]
-  binding.pry
+
+  # if there is no zip code then instead of 'nil' have '00000' as zip code
+  if zipcode.nil?
+    zipcode = '00000'
   # if the zip code is exactly five digits, assume that it is ok
-  if zipcode.length < 5
+  elsif zipcode.length < 5
     zipcode = zipcode.rjust(5, '0')
   # if the zip code is more than five digits, truncate it to the first five digits
   elsif zipcode.length > 5
